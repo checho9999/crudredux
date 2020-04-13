@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 const Productos = () => {
-    return (  
+    return (          
         <Fragment>
             <h2 className='text-center my-5'>Listado de Productos</h2>
 
