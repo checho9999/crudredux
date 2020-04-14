@@ -34,6 +34,11 @@
       "nombre": "tequila",
       "precio": 555,
       "id": 7
+    },
+    {
+      "nombre": "ron blanco",
+      "precio": 654,
+      "id": 8
     }
   ]
 }
