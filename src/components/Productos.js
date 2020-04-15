@@ -24,7 +24,7 @@ const Productos = () => {
     const cargando = useSelector( state => state.productos.loading );
     const error = useSelector( state => state.productos.error );
     //console.log(productos);
-
+    //productos.map(producto => console.log(producto.id));
     return (       
         <Fragment>
             <h2 className='text-center my-5'>Listado de Productos</h2>

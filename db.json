@@ -11,11 +11,6 @@
       "precio": "1"
     },
     {
-      "nombre": "Jugo de Naranja",
-      "precio": "300",
-      "id": 3
-    },
-    {
       "nombre": "Rib Eye 800g",
       "precio": "200",
       "id": 4
@@ -26,11 +21,6 @@
       "id": 5
     },
     {
-      "nombre": "pintita",
-      "precio": 66,
-      "id": 6
-    },
-    {
       "nombre": "tequila",
       "precio": 555,
       "id": 7
@@ -39,6 +29,16 @@
       "nombre": "ron blanco",
       "precio": 654,
       "id": 8
+    },
+    {
+      "nombre": "27202411",
+      "precio": 666,
+      "id": 9
+    },
+    {
+      "nombre": "ff",
+      "precio": 777,
+      "id": 10
     }
   ]
 }

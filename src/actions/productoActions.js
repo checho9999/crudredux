@@ -1,6 +1,9 @@
 import { AGREGAR_PRODUCTO, AGREGAR_PRODUCTO_EXITO, 
          AGREGAR_PRODUCTO_ERROR, COMENZAR_DESCARGA_PRODUCTO, 
-         DESCARGA_PRODUCTO_EXITO, DESCARGA_PRODUCTO_ERROR
+         DESCARGA_PRODUCTO_EXITO, DESCARGA_PRODUCTO_ERROR,
+         OBTENER_PRODUCTO_ELIMINAR, PRODUCTO_ELIMINADO_EXITO, 
+         PRODUCTO_ELIMINADO_ERROR
+
        } from '../types';
 
 import ClienteAxios from '../config/axios';
@@ -65,10 +68,11 @@ export function obtenerProductosAction( producto ){
         //console.log(producto);
         dispatch( descargarProductos() );
         try {
-            //Insertamos el nuevo producto en la base de datos
+            //Obtenemos la lista de productos desde la base de datos
             const respuesta = await ClienteAxios.get('/productos');            
             //Si no hubo error en el get, actualizamos el state
-            dispatch( descargaProductosExitosa ( respuesta.data ) )             
+            dispatch( descargaProductosExitosa ( respuesta.data ) )
+            //console.log(respuesta.data)             
         } catch(error) {
             console.log(error);
             //Si hubo error en el get, actualizamos el state
@@ -92,5 +96,49 @@ const descargaProductosExitosa = productos => ({
 //Si hubo un error al querer obtener los productos desde la base de datos
 const descargaProductosError = () => ({
     type: DESCARGA_PRODUCTO_ERROR,
+    payload: true
+})
+
+//Eliminamos un producto en la base de datos
+export function borrarProductoAction( id ){
+    return async (dispatch) => {
+        //console.log(id);
+        dispatch( obtenerProductoElminar( id ) );
+
+        try {
+            //Eliminamos un producto de la base de datos
+            await ClienteAxios.delete(`/productos/${id}`);            
+            //const resultado = await ClienteAxios.delete(`/productos/${id}`);            
+            //console.log(resultado);
+            //Si no hubo error en el delete, actualizamos el state
+            dispatch( eliminarProductoExito() )
+            //Agregamos una alerta del tipo success
+            Swal.fire(
+                'Elminado!',
+                'El producto se eliminó correctamente.',
+                'success'
+            )
+        } catch(error) {
+            console.log(error);
+            //Si hubo error en el delete, actualizamos el state
+            dispatch( eliminarProductoError() )
+        }
+    }
+}
+
+//Iniciamos el pedido del usuario para elimino un producto en la API
+const obtenerProductoElminar = id => ({
+    type: OBTENER_PRODUCTO_ELIMINAR,
+    payload: id
+})
+
+//Si el producto se elimino con exito desde la base datos
+const eliminarProductoExito = () => ({
+    type: PRODUCTO_ELIMINADO_EXITO
+})
+
+//Si hubo un error al querer eliminar un producto desde la base de datos
+const eliminarProductoError = () => ({
+    type: PRODUCTO_ELIMINADO_ERROR,
     payload: true
 })
