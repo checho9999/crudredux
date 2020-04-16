@@ -3,21 +3,21 @@
     {
       "id": 1,
       "nombre": "Jugo de Zanahoria",
-      "precio": "31111"
+      "precio": 31111
     },
     {
       "id": 2,
       "nombre": "Jugo de Naranja",
-      "precio": "1"
+      "precio": 1
     },
     {
       "nombre": "Rib Eye 800g",
-      "precio": "200",
+      "precio": 200,
       "id": 4
     },
     {
       "nombre": "Jugo de Fresa",
-      "precio": "200",
+      "precio": 200,
       "id": 5
     },
     {
@@ -31,13 +31,13 @@
       "id": 8
     },
     {
-      "nombre": "27202411",
-      "precio": 666,
+      "nombre": "checho9999",
+      "precio": "565",
       "id": 9
     },
     {
-      "nombre": "ff",
-      "precio": 777,
+      "nombre": "27202411",
+      "precio": "7476",
       "id": 10
     }
   ]

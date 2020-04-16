@@ -1,9 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 //Actions de REDUX
-import { borrarProductoAction } from '../actions/productoActions';
+import { borrarProductoAction, obtenerProductoEditarAction } from '../actions/productoActions';
 import { useDispatch } from 'react-redux'
 
 const Producto = ( { producto } ) => {
@@ -14,6 +14,8 @@ const Producto = ( { producto } ) => {
     //Utilizamos useDispatch y nos devuelve una funcion (dispatch) que luego utilizara a otra funcion
     const dispatch = useDispatch();    
     //No utilizamos useSelector ya que no tenemos state al cual acceder
+    //Habilitamos useHistory para habilitar la redireccion hacia Productos
+    const history = useHistory();
 
     //Aca corfirmamos la eliminacion del producto en base a la solicitud del usuario
     const confirmarEliminarProducto = id => {
@@ -32,11 +34,18 @@ const Producto = ( { producto } ) => {
             if (result.value) {
                 //Utilizamos dispatch para llamar a la funciones que tenemos en nuestros actions
                 //Llamamos al action de productoActions...lo movemos dentro del if del resul de Swal
-                dispatch( borrarProductoAction ( id) )
+                dispatch( borrarProductoAction ( id ) )
             }
         })
 
         //dispatch( borrarProductoAction ( id) )...lo movemos dentro del if del result de Swal
+    }
+
+    //Funcion que nos permite seleccionar un id(producto) y redireccionarlo hacia EditarProducto
+    const redireccionarEdicion = producto => {
+        dispatch( obtenerProductoEditarAction ( producto) );
+        //redireccionamos hacia EditarProducto
+        history.push(`/productos/editar/${producto.id}`);
     }
 
     return (  
@@ -44,9 +53,11 @@ const Producto = ( { producto } ) => {
             <td>{nombre}</td>
             <td><span className='font-weight-bold'> $ {precio} </span></td>
             <td className='acciones'>
-                <Link to={`/productos/editar/${id}`} className='btn btn-primary mr-2'>
-                    Editar
-                </Link>
+                <button
+                    type='button' className='btn btn-primary mr-2'
+                    onClick={() => redireccionarEdicion(producto)}
+                    >Editar
+                </button>
                 <button type='button' className='btn btn-danger'
                     onClick={() => confirmarEliminarProducto(id)}
                     >Eliminar

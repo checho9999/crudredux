@@ -2,7 +2,9 @@ import { AGREGAR_PRODUCTO, AGREGAR_PRODUCTO_EXITO,
          AGREGAR_PRODUCTO_ERROR, COMENZAR_DESCARGA_PRODUCTO, 
          DESCARGA_PRODUCTO_EXITO, DESCARGA_PRODUCTO_ERROR,
          OBTENER_PRODUCTO_ELIMINAR, PRODUCTO_ELIMINADO_EXITO, 
-         PRODUCTO_ELIMINADO_ERROR
+         PRODUCTO_ELIMINADO_ERROR, OBTENER_PRODUCTO_EDITAR,
+         COMENZAR_EDICION_PRODUCTO, PRODUCTO_EDITADO_EXITO, 
+         PRODUCTO_EDITADO_ERROR
 
        } from '../types';
 
@@ -126,7 +128,7 @@ export function borrarProductoAction( id ){
     }
 }
 
-//Iniciamos el pedido del usuario para elimino un producto en la API
+//Iniciamos el pedido del usuario para eliminar un producto en la API
 const obtenerProductoElminar = id => ({
     type: OBTENER_PRODUCTO_ELIMINAR,
     payload: id
@@ -140,5 +142,58 @@ const eliminarProductoExito = () => ({
 //Si hubo un error al querer eliminar un producto desde la base de datos
 const eliminarProductoError = () => ({
     type: PRODUCTO_ELIMINADO_ERROR,
+    payload: true
+})
+
+//Seleccionamos un producto en base al pedido del usuario
+export function obtenerProductoEditarAction( producto ){
+    return (dispatch) => {
+        //console.log(id);
+        dispatch( obtenerProductoEditar( producto ) );
+    }
+}
+
+//Iniciamos el pedido del usuario para seleccionar un producto para editar en el input
+const obtenerProductoEditar = producto => ({
+    type: OBTENER_PRODUCTO_EDITAR,
+    payload: producto
+})
+
+//Iniciamos el pedido del usuario para editar un producto en la API
+export function editarProductoAction( producto ){
+    return async (dispatch) => {
+        //console.log(id);
+        dispatch( editarProducto( producto ) );
+
+        try {
+            //Editamos un producto de la base de datos
+            const resultado = await ClienteAxios.put(`/productos/${producto.id}`, producto);            
+            //const resultado = await ClienteAxios.delete(`/productos/${id}`);            
+            console.log(resultado.data);
+            //Si no hubo error en el put, actualizamos el state
+            dispatch( editarProductoExito( producto ) )
+            //Agregamos una alerta del tipo success
+        } catch(error) {
+            console.log(error);
+            //Si hubo error en el put, actualizamos el state
+            dispatch( editarProductoError() )
+        }
+    }
+}
+
+//Iniciamos el pedido del usuario para seleccionar un producto para editar en el input
+const editarProducto = () => ({
+    type: COMENZAR_EDICION_PRODUCTO
+})
+
+//Si el producto se edito con exito desde la base datos
+const editarProductoExito = producto => ({
+    type: PRODUCTO_EDITADO_EXITO,
+    payload: producto
+})
+
+//Si hubo un error al querer editar un producto desde la base de datos
+const editarProductoError = () => ({
+    type: PRODUCTO_EDITADO_ERROR,
     payload: true
 })
