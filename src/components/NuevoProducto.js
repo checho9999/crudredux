@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 //Actions de REDUX
 import { crearNuevoProductoAction } from '../actions/productoActions';
 import { useDispatch, useSelector } from 'react-redux'
+import { mostrarAlertaAction, ocultarAlertaAction } from '../actions/alertaActions';
 
 //Accedemos al history a traves del Router de react-router-dom(el componente esta dentro del Router)
 const NuevoProducto = ( { history } ) => {
@@ -19,6 +20,7 @@ const NuevoProducto = ( { history } ) => {
     //const cargando = useSelector( state => state ) //truco para ver todo el state
     const cargando = useSelector( state => state.productos.loading );
     const error = useSelector( state => state.productos.error );
+    const alerta = useSelector( state => state.alerta.alerta );
     //console.log(cargando + " " + error);
 
     //Utilizamos dispatch para llamar a la funciones que tenemos en nuestros actions
@@ -32,10 +34,20 @@ const NuevoProducto = ( { history } ) => {
 
         //validando el nombre y el precio del input
         if (nombre.trim() === '' || precio <= 0){
-            //Seteamos a true, ya que no paso la validacion
-            //guardarError(true);
+            //Si hubo error en la validacion, pasamos el mensaje y las clases de estilo a la alerta
+            const alerta = {
+                msg: 'Ambos campos son obligatorios',
+                classes: 'alert alert-danger text-center text-uppercase p3'
+            }
+
+            //llamamos a la alerta
+            dispatch ( mostrarAlertaAction( alerta ) );
+
             return;
         }
+
+        //Si no hubo error en la validacion, ocultamos la alerta
+        dispatch ( ocultarAlertaAction() );
 
         //Creamos el nuevo producto validado
         agregarProducto({
@@ -53,18 +65,18 @@ const NuevoProducto = ( { history } ) => {
                 <div className='card'>
                     <div className='card-body'>
                         <h2 className='text-center mb-4 font-weight-bold'>
-                            Agregar Nuevo Libro
+                            Agregar Nuevo Producto
                         </h2>
-
+                        { alerta ? <p className={alerta.classes}> {alerta.msg}</p> : null }
                         <form
                             onSubmit={submitNuevoProducto}
                         >
                             <div className='form-group'>
-                                <label>Nombre Libro</label>
+                                <label>Nombre Producto</label>
                                 <input 
                                     type='text' 
                                     className='form-control' 
-                                    placeholder='Nombre Libro' 
+                                    placeholder='Nombre Producto' 
                                     name='nombre'
                                     value={nombre}
                                     onChange={e => guardarNombre(e.target.value)}
@@ -72,11 +84,11 @@ const NuevoProducto = ( { history } ) => {
                             </div>
 
                             <div className='form-group'>
-                                <label>Precio Libro</label>
+                                <label>Precio</label>
                                 <input 
                                     type='text' 
                                     className='form-control' 
-                                    placeholder='Precio Libro' 
+                                    placeholder='Precio' 
                                     name='precio'
                                     value={precio}
                                     onChange={e => guardarPrecio(Number(e.target.value))}

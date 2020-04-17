@@ -67,11 +67,11 @@ const EditarProducto = () => {
                             onSubmit={submitEditarProducto}
                         >
                             <div className='form-group'>
-                                <label>Titulo</label>
+                                <label>Nombre Producto</label>
                                 <input 
                                     type='text' 
                                     className='form-control' 
-                                    placeholder='Titulo'
+                                    placeholder='Nombre Producto'
                                     name='nombre'
                                     value={nombre}
                                     onChange={onChangeFormulario}
@@ -79,7 +79,7 @@ const EditarProducto = () => {
                             </div>
                             
                             <div className='form-group'>
-                                <label>Precio del Producto</label>
+                                <label>Precio</label>
                                 <input 
                                     type='number' 
                                     className='form-control' 

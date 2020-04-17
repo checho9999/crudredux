@@ -5,7 +5,6 @@ import { AGREGAR_PRODUCTO, AGREGAR_PRODUCTO_EXITO,
          PRODUCTO_ELIMINADO_ERROR, OBTENER_PRODUCTO_EDITAR,
          COMENZAR_EDICION_PRODUCTO, PRODUCTO_EDITADO_EXITO, 
          PRODUCTO_EDITADO_ERROR
-
        } from '../types';
 
 import ClienteAxios from '../config/axios';

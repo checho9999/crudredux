@@ -25,8 +25,6 @@ export default function(state = initialState, action){
                 ...state,
                 loading: action.payload
             }
-        case COMENZAR_EDICION_PRODUCTO:
-            return state;         
         case AGREGAR_PRODUCTO_EXITO:
             return{
                 ...state,
@@ -61,6 +59,8 @@ export default function(state = initialState, action){
                 productos: state.productos.filter(producto => producto.id !== state.productoeliminar),
                 productoeliminar: null
             }
+        case COMENZAR_EDICION_PRODUCTO:
+            return state;             
         case OBTENER_PRODUCTO_EDITAR:
             return{
                 ...state,
